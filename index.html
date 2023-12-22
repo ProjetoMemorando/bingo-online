@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <title>Bingo Online</title>
+  <style>
+    body {
+      position: absolute;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100vh;
+      background-image: url(bg2.svg);
+      background-repeat:no-repeat;
+      background-size: 100%;
+      color: #FFFF;
+      min-height: 600px;
+      overflow: auto;
+    }
+
+    #bingo-container {
+      position: relative;
+      max-width: 750px;
+      height: 400px;
+      text-align: center;
+      left: 0.8%;
+
+    }
+
+    #current-number {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    #previous-numbers {padding-top: 10px;
+      border: 1px yellow solid;
+      font-size: 1.2em;
+      background: rgba( 255, 255, 255, 0.2 );
+      box-shadow: 0 8px 15px 0 #333;
+      backdrop-filter: blur( 1px );
+      -webkit-backdrop-filter: blur( 1px );
+      border-radius: 5px;
+      border: 1px solid rgba( 255, 255, 255, 0.18 );
+    }
+
+    .img-bingo {
+      height: auto;
+      margin: 0 auto;
+      display: flex;
+    }
+
+    #logo-bingp {
+      position: relative;
+      width: 45%;
+      left: 0.8%;
+      margin: 0 auto;
+    }
+
+    h1 {
+      height: 90px;
+      font-size: 200%;
+    }
+    .btn {
+      position: relative;
+
+    }
+  </style>
+</head>
+<body>
+  <div class="img-bingo">
+    <img id="logo-bingp" src="bingo-balls-removebg-preview.png" alt="">
+  </div>
+  <div id="bingo-container">
+    <p></p>
+    <div id="current-number">
+      Número Sorteado: </br>
+        <span id="currents"><h1 id="current"></h1></span>
+    </div>
+    <button onclick="nextNumber()" class="btn btn-primary">Sortear Próximo Número</button>
+    <p></p>
+    <div id="previous-numbers">
+      Números já sorteados: </br>
+        <span id="preview"><h3 id="previous"></h3></span>
+    </div>
+    
+  </div>
+
+  <script>
+        // Função para gerar um número aleatório entre 1 e 75 (assumindo que seja um bingo de 75 números)
+        function generateRandomNumber() {
+          return Math.floor(Math.random() * 90) + 1;
+        }
+
+        // Variáveis globais
+        var drawnNumbers = [];
+
+        // Função para verificar se um número já foi sorteado
+        function isNumberDrawn(number) {
+          return drawnNumbers.includes(number);
+        }
+
+        // Função para sortear o próximo número
+        function nextNumber() {
+          var currentNumber;
+
+          // Verifica se todos os números já foram sorteados
+          if (drawnNumbers.length === 90) {
+            // Se todos foram sorteados, exibe um alerta
+            alert('Todos os 90 números foram sorteados!');
+            return; // Sai da função, pois não há mais números para sortear
+          }
+
+          // Gera um novo número até encontrar um que ainda não foi sorteado
+          do {
+            currentNumber = generateRandomNumber();
+          } while (isNumberDrawn(currentNumber));
+
+          // Adiciona o número sorteado à lista de números sorteados
+          drawnNumbers.push(currentNumber);
+
+          // Atualiza o número atual exibido na tela
+          document.getElementById('current').textContent = currentNumber;
+
+          // Atualiza a lista de números anteriores exibida na tela
+          document.getElementById('previous').textContent = drawnNumbers.join(', ');
+        }
+
+  </script>
+</body>
+</html>
